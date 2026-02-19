@@ -1,6 +1,7 @@
 import express from 'express';
 import routes from './routes.js';
 import handlebars from 'express-handlebars';
+import mongoose from 'mongoose';
 
 const app = express();
 
@@ -11,6 +12,17 @@ app.engine('hbs', handlebars.engine({
         allowProtoPropertiesByDefault: true, 
         allowProtoMethodsByDefault: true }
 }));
+
+//Setup Database
+try {
+    await mongoose.connect('mongodb://localhost:27017',{
+    dbName: 'CourseBook',
+});
+    console.log('Connect to database successfully');    
+} catch (err) {
+    console.error('Can not connect to DATA-BASE', err.message);
+}
+
 
 //Gonfig Handlebars
 app.set('view engine', 'hbs');
