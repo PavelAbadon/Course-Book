@@ -15,15 +15,27 @@ userController.post('/register', async (req, res) =>{
     try {
         await userService.register(email, password, rePassword, username);
         res.redirect('/');
-        console.log('XXXXX')
+        
     } catch (err) {
-        console.log(err);
         res.render('users/register', {
             error: err.message,
             email,
             username
         });
     }
+    
+});
+
+//Login Logic
+userController.get('/login', (req, res) =>{
+    res.render('users/login');
+});
+userController.post('/login', async (req, res) => {
+    const{email, password} = req.body;
+
+    const token = await userService.login(email, password);
+    res.cookie('auth', token);   
+    res.redirect('/');
     
 })
 
