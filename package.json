@@ -1,0 +1,25 @@
+{
+  "name": "course-book",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PavelAbadon/Course-Book.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/PavelAbadon/Course-Book/issues"
+  },
+  "homepage": "https://github.com/PavelAbadon/Course-Book#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-handlebars": "^8.0.6"
+  }
+}
