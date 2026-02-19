@@ -13,7 +13,8 @@ userController.post('/register', async (req, res) =>{
     const {email, password, rePassword, username} = req.body;
 
     try {
-        await userService.register(email, password, rePassword, username);
+        const token = await userService.register(email, password, rePassword, username);
+        res.cookie('auth', token);
         res.redirect('/');
         
     } catch (err) {

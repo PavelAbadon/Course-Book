@@ -1,6 +1,6 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt"; 
-import jwt from "jsonwebtoken";
+import { generateAuthToken } from "../utils/tokenUtils.js";
 
 export async function register(email, password, rePassword, username) {
 
@@ -20,7 +20,9 @@ export async function register(email, password, rePassword, username) {
         username
     });
 
-    return newUser;
+    const token = generateAuthToken(newUser)
+
+    return token;
 }
 
 export async function login(email, password) {
@@ -37,11 +39,6 @@ export async function login(email, password) {
     }
 
     //Create token
-    const payload = {
-        username: user.username,
-        email:user.email,
-        id: user.id,
-    }
-    const token = jwt.sign(payload, "tovaEsecretZASTOTOeNAslokavica", {expiresIn: '2h'});
+    const token = generateAuthToken(user);
     return token;
 }
