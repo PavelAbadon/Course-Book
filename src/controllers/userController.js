@@ -20,7 +20,9 @@ userController.post('/register', isGuest, async (req, res) =>{
         res.redirect('/');
         
     } catch (err) {
-        res.render('users/register', {error:getErrorMessage(err) });
+        res.render('users/register', {
+            error:getErrorMessage(err),
+        user: {email, username} });
     }
     
 });
@@ -37,7 +39,10 @@ userController.post('/login', isGuest, async (req, res) => {
         res.cookie('auth', token);   
         res.redirect('/');
     } catch (err) {
-         res.render('users/login', {error:getErrorMessage(err) });
+        res.render('users/login', {
+            error:getErrorMessage(err), 
+            user: {email} })       
+
     }
     
 });
