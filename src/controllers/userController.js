@@ -7,7 +7,7 @@ const userController = Router();
 //Register Logic
 //First get Register View
 userController.get('/register', isGuest, (req, res) => {
-    res.render('users/register');
+    res.render('users/register', {pageTitle: 'Register page'});
 });
 //Second post Register data - * must async/await because we are making a request
 userController.post('/register', isGuest, async (req, res) =>{
@@ -30,7 +30,7 @@ userController.post('/register', isGuest, async (req, res) =>{
 
 //Login Logic
 userController.get('/login', isGuest, (req, res) =>{
-    res.render('users/login');
+    res.render('users/login', {pageTitle: 'Login page'});
 });
 userController.post('/login', isGuest, async (req, res) => {
     const{email, password} = req.body;
