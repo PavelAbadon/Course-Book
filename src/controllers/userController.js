@@ -1,15 +1,16 @@
 import { Router } from "express";
 import { userService } from "../services/index.js";
+import { isAuth, isGuest } from "../middlewares/authMiddleware.js";
 
 const userController = Router();
 
 //Register Logic
 //First get Register View
-userController.get('/register', (req, res) => {
+userController.get('/register', isGuest, (req, res) => {
     res.render('users/register');
 });
 //Second post Register data - * must async/await because we are making a request
-userController.post('/register', async (req, res) =>{
+userController.post('/register', isGuest, async (req, res) =>{
     const {email, password, rePassword, username} = req.body;
 
     try {
@@ -28,10 +29,10 @@ userController.post('/register', async (req, res) =>{
 });
 
 //Login Logic
-userController.get('/login', (req, res) =>{
+userController.get('/login', isGuest, (req, res) =>{
     res.render('users/login');
 });
-userController.post('/login', async (req, res) => {
+userController.post('/login', isGuest, async (req, res) => {
     const{email, password} = req.body;
 
     const token = await userService.login(email, password);
@@ -40,7 +41,7 @@ userController.post('/login', async (req, res) => {
     
 });
 
-userController.get('/logout', async (req, res) =>{
+userController.get('/logout', isAuth, async (req, res) =>{
     res.clearCookie('auth');
     res.redirect('/');
 })

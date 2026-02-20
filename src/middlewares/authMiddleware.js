@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 
 export function authMiddleware(req, res, next){
     const token = req.cookies['auth'];
+    req.isAuthenticated = false;
+    res.locals.isAuthenticated = false;
 
     if(!token){
         return next();
@@ -10,8 +12,12 @@ export function authMiddleware(req, res, next){
 
     try {
         const decodedToken = jwt.verify(token, JWT_SECRET);
+        
         req.user = decodedToken;
-        isAuthenticated = true;
+        //Add user data to handlebars context
+        req.isAuthenticated = true;
+        res.locals.isAuthenticated = true;
+        
         next();
         
     } catch (err) {
@@ -19,4 +25,21 @@ export function authMiddleware(req, res, next){
         res.redirect('/users/login');
     }
 
+}
+
+export function isAuth (req, res, next){
+    if(!req.isAuthenticated){
+       return res.redirect('/users/login');
+    }
+
+    next();
+
+}
+
+export function isGuest (req, res, next){
+    if(req.isAuthenticated){
+       return res.redirect('/');
+    }
+
+    next();
 }
