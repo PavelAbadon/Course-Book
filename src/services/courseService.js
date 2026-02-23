@@ -5,3 +5,7 @@ export function createCourse(courseData, userId) {
         ...courseData, 
         owner: userId}
 )}
+
+export function getAllCorses(){
+    return Course.find();
+}

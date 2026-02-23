@@ -7,18 +7,14 @@ const courseController = Router();
 
 courseController.get('/create', isAuth, (req, res) =>{
     res.render('courses/create', {pageTitle: 'Create course page'});
-})
+});
 
 courseController.post('/create', isAuth, async (req, res) =>{
     const courseData = req.body
     const userId = req.user.id;
-    console.log(courseData);
-    console.log(userId);
-    console.log('до тук стигаме')
-
+    
     try {
         await courseService.createCourse(courseData, userId);
-        console.log('Защо не стига до тук');
         res.redirect('/');
 
     } catch (err) {
@@ -27,6 +23,12 @@ courseController.post('/create', isAuth, async (req, res) =>{
             course: courseData,
         });
     }
-})
+});
+
+courseController.get('/', async(req, res) =>{
+    const courses = await courseService.getAllCorses();
+
+    res.render('courses/catalog', {courses,  pageTitle: 'Catalog page'})
+});
 
 export default courseController
