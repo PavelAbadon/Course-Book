@@ -27,6 +27,7 @@ courseController.post('/create', isAuth, async (req, res) =>{
 
 courseController.get('/', async(req, res) =>{
     const courses = await courseService.getAllCorses();
+    //const courses = [];
 
     res.render('courses/catalog', {courses,  pageTitle: 'Catalog page'})
 });
