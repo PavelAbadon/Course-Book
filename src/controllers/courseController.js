@@ -33,6 +33,12 @@ courseController.get('/', async(req, res) =>{
     res.render('courses/catalog', {courses,  pageTitle: 'Catalog page'})
 });
 
+courseController.get('/:id/details', async(req, res) =>{
+    const courseId = req.params.id;
+
+    res.render('courses/details', {pageTitle: 'Details page'})
+})
+
 
 
 export default courseController
