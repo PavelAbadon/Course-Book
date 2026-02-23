@@ -15,7 +15,7 @@ courseController.post('/create', isAuth, async (req, res) =>{
     
     try {
         await courseService.createCourse(courseData, userId);
-        res.redirect('/');
+        res.redirect('/courses');
 
     } catch (err) {
         res.render('courses/create', {
@@ -27,9 +27,12 @@ courseController.post('/create', isAuth, async (req, res) =>{
 
 courseController.get('/', async(req, res) =>{
     const courses = await courseService.getAllCorses();
+    //Check if there are no courses
     //const courses = [];
 
     res.render('courses/catalog', {courses,  pageTitle: 'Catalog page'})
 });
+
+
 
 export default courseController

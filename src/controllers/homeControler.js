@@ -1,10 +1,12 @@
 import { Router } from "express";
+import { courseService } from "../services/index.js";
 
 
 const homeController = Router();
 
-homeController.get('/', (req, res) => {
-    res.render('home', {pageTitle: 'Home page'} );
+homeController.get('/', async(req, res) => {
+    const latestCourses = await courseService.getLatest();
+    res.render('home', {latestCourses, pageTitle: 'Home page'} );
 })
 
 export default homeController;

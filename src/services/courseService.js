@@ -9,3 +9,7 @@ export function createCourse(courseData, userId) {
 export function getAllCorses(){
     return Course.find();
 }
+
+export function getLatest (){
+    return Course.find().sort({_id:-1}).limit(3);
+}
