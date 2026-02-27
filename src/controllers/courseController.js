@@ -35,9 +35,23 @@ courseController.get('/', async(req, res) =>{
 
 courseController.get('/:id/details', async(req, res) =>{
     const courseId = req.params.id;
+    const userId = req.user?.id;
+    const course = await courseService.getOneById(courseId);
+    const isOwner = course.owner.equals(userId);
+    const signedData = course.signed.map(signed => signed.username).join(', ');
 
-    res.render('courses/details', {pageTitle: 'Details page'})
-})
+    res.render('courses/details', {course, isOwner, signedData, pageTitle: 'Details page'})
+});
+
+courseController.get('/:id/signed', isAuth, async(req, res) => {
+    const courseId = req.params.id;
+    const userId = req.user.id;
+
+    await courseService.signedCourse(courseId, userId);
+    console.log('sucsesfull sign');
+
+    res.redirect(`/courses/${courseId}/details`);
+});
 
 
 

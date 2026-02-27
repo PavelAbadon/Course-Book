@@ -13,3 +13,11 @@ export function getAllCorses(){
 export function getLatest (){
     return Course.find().sort({_id:-1}).limit(3);
 }
+
+export function getOneById (courseId){
+    return Course.findById(courseId).populate(['owner', 'signed']);
+}
+
+export function signedCourse (courseId, userId){
+    return Course.findByIdAndUpdate( courseId, { $addToSet:{signed:userId} });
+}

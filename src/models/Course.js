@@ -28,7 +28,11 @@ const courseSchema = new Schema({
     owner:{
         type: Types.ObjectId,
         ref: 'User', 
-    }
+    },
+    signed:[{
+        type: Types.ObjectId,
+        ref: 'User', 
+    }]
            
 });
 
