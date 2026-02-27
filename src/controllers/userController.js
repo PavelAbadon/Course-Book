@@ -50,6 +50,10 @@ userController.post('/login', isGuest, async (req, res) => {
 userController.get('/logout', isAuth, async (req, res) =>{
     res.clearCookie('auth');
     res.redirect('/');
+});
+
+userController.get('/profile', isAuth, (req, res) => {
+    res.render(`users/profile`, {pageTitle: 'Profile page'} )
 })
 
 export default userController;
