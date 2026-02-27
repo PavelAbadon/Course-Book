@@ -21,3 +21,7 @@ export function getOneById (courseId){
 export function signedCourse (courseId, userId){
     return Course.findByIdAndUpdate( courseId, { $addToSet:{signed:userId} });
 }
+
+export function deleteCourse (courseId){
+    return Course.findByIdAndDelete(courseId);
+}

@@ -30,7 +30,7 @@ courseController.get('/', async(req, res) =>{
     //Check if there are no courses
     //const courses = [];
 
-    res.render('courses/catalog', {courses,  pageTitle: 'Catalog page'})
+    res.render('courses/catalog', {courses,  pageTitle: 'Catalog page'});
 });
 
 courseController.get('/:id/details', async(req, res) =>{
@@ -53,6 +53,12 @@ courseController.get('/:id/signed', isAuth, async(req, res) => {
 
     res.redirect(`/courses/${courseId}/details`);
 });
+
+courseController.get('/:id/delete', isAuth, async(req, res) => {
+    const courseId = req.params.id;
+    await courseService.deleteCourse(courseId);
+    res.redirect('/courses');
+})
 
 
 
