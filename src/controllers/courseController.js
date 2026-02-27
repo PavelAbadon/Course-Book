@@ -5,6 +5,7 @@ import { getErrorMessage } from "../utils/errorUtils.js";
 
 const courseController = Router();
 
+//Create functionality
 courseController.get('/create', isAuth, (req, res) =>{
     res.render('courses/create', {pageTitle: 'Create course page'});
 });
@@ -25,6 +26,7 @@ courseController.post('/create', isAuth, async (req, res) =>{
     }
 });
 
+// Get All functionality
 courseController.get('/', async(req, res) =>{
     const courses = await courseService.getAllCorses();
     //Check if there are no courses
@@ -33,6 +35,7 @@ courseController.get('/', async(req, res) =>{
     res.render('courses/catalog', {courses,  pageTitle: 'Catalog page'});
 });
 
+//Details Functionality
 courseController.get('/:id/details', async(req, res) =>{
     const courseId = req.params.id;
     const userId = req.user?.id;
@@ -54,11 +57,33 @@ courseController.get('/:id/signed', isAuth, async(req, res) => {
     res.redirect(`/courses/${courseId}/details`);
 });
 
+//Delete functionality
 courseController.get('/:id/delete', isAuth, async(req, res) => {
     const courseId = req.params.id;
     await courseService.deleteCourse(courseId);
     res.redirect('/courses');
-})
+});
+
+//Edit functionality
+courseController.get('/:id/edit', isAuth, async (req, res) => {
+    const courseId = req.params.id;
+    const course = await courseService.getOneById(courseId);
+
+    res.render('courses/edit', {course, pageTitle:'Edit course'});
+});
+
+courseController.post('/:id/edit', isAuth, async (req, res) => {
+    const courseId = req.params.id;
+    const courseData = req.body;
+    const userId = req.user.id;
+
+    try {
+        await courseService.editCourse(courseId, courseData);
+        res.redirect(`/courses/${courseId}/details`);
+    } catch (err) {
+        res.render('courses/edit', {course: courseData, error: getErrorMessage(err)});
+    }
+});
 
 
 

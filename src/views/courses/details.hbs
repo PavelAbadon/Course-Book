@@ -28,7 +28,7 @@
             <div class="btn-container">
                 <!-- Only for registered user and creator of the course-->
                 {{#if isOwner}}
-                <a href="#">Edit</a>
+                <a href="/courses/{{course.id}}/edit">Edit</a>
                 <a href="/courses/{{course.id}}/delete">Delete</a>
                 {{else}}
                     {{#if isSigned}}

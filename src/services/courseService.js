@@ -25,3 +25,7 @@ export function signedCourse (courseId, userId){
 export function deleteCourse (courseId){
     return Course.findByIdAndDelete(courseId);
 }
+
+export function editCourse(courseId, courseData, userId){
+    return Course.findByIdAndUpdate(courseId, courseData, {runValidators:true});
+}
